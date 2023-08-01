@@ -1,0 +1,21 @@
+{
+  "taskList": [
+    {
+      "id": 1,
+      "title": "Introduction to Mathematics",
+      "description": "Introduction to Mathematics",
+      "status": "toDo",
+      "createdAt": "2023-07-30T12:00:00Z",
+      "soft_delete": null
+    },
+    {
+      "id": 2
+    },
+    {
+      "id": 3
+    },
+    {
+      "id": 4
+    }
+  ]
+}
