@@ -7,19 +7,12 @@ import { useEffect, useState } from 'react';
 
 
 const Home = observer(() => {
-  const task = todoStore.task;
 
   const handleDeleteTask = (taskId: string) => {
     todoStore.deleteTask(taskId);
   };
 
-  const handleUpdateTask = (taskId: string, title: string, description: string) => {
-    todoStore.buttonType = "Update"
-    todoStore.updateTaskId = taskId
-    task.title = title
-    task.description = description
-  };
-
+  
   const typeOfGroups: statusType[] = ["toDo", "inProgress", "done"]
 
   useEffect ( () => {
@@ -30,7 +23,7 @@ const Home = observer(() => {
 
   return (
     <div className="container mx-auto mt-5 px-5">
-      <h1 className="text-3xl font-semibold mb-4">To-Do App</h1>
+      <h1 className="text-3xl font-semibold mb-4">Todo App</h1>
       <AddTask />
       <div>
         {
@@ -57,7 +50,7 @@ const Home = observer(() => {
                     <div className="flex-1">{taskItem.createdAt}</div>
                     <button
                       className="px-2 py-1 mr-2 bg-blue-500 text-white rounded"
-                      onClick={() => handleUpdateTask(taskItem.id, taskItem.title, taskItem.description)}
+                      onClick={() => todoStore.handleUpdateTask(taskItem.id, taskItem.title, taskItem.description)}
                     >
                       Update
                     </button>

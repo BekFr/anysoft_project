@@ -1,4 +1,3 @@
-import { useState, useId } from 'react'
 import { TaskItem } from '../ts/type';
 import todoStore from '../todoLogic';
 import { observer } from 'mobx-react-lite';
@@ -6,11 +5,27 @@ import { observer } from 'mobx-react-lite';
 const AddTask = observer(() => {
 
     const task = todoStore.task;
-    const handleAddTask = () => {
+    const handleAddUpdateTask = () => {
         if (todoStore.updateTaskId) {
             const selectedTask = todoStore.tasks.find(task => task.id === todoStore.updateTaskId)
             selectedTask!.title = task.title
             selectedTask!.description = task.description
+
+            fetch(`http://localhost:8000/taskList/${selectedTask!.id}`, {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    ...selectedTask,
+                    title: task.title,
+                    description: task.description
+                })
+            })
+                .then(res => res.json())
+                .then(data => console.log(data))
+                .catch(err => console.log(err))
+
             todoStore.buttonType = "Add"
             todoStore.updateTaskId  = ""
 
@@ -51,7 +66,7 @@ const AddTask = observer(() => {
 
             <button
                 className="px-4 py-2 bg-blue-500 text-white rounded-r w-max h-max self-end"
-                onClick={handleAddTask}
+                onClick={handleAddUpdateTask}
             >
                 {todoStore.buttonType}  Task
             </button>

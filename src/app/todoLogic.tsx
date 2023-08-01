@@ -22,29 +22,59 @@ class TodoLogic {
     }
 
 
-    
-
     addTask(task: TaskItem) {
         this.tasks.push(task);
 
         fetch("http://localhost:8000/taskList", {
             method: "POST",
-            body: JSON.stringify(this.tasks)
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(task)
         })
-
-        
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(err => console.log(err))
     }
 
 
     deleteTask(taskId: string) {
         this.tasks = this.tasks.filter((task) => task.id !== taskId);
+
+        fetch(`http://localhost:8000/taskList/${taskId}`, {
+            method: "DELETE"
+        })
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(err => console.log(err))
     }
+
+    handleUpdateTask = (taskId: string, title: string, description: string) => {
+        todoStore.buttonType = "Update"
+        todoStore.updateTaskId = taskId
+        todoStore.task.title = title
+        todoStore.task.description = description
+    };
 
     handlePointerEnter = (item: statusType) => {
         if (todoStore.downTaskId) {
             const selectedTask = todoStore.tasks.find(task => task.id === todoStore.downTaskId)
             selectedTask!.status = item
             todoStore.downTaskId = null
+
+            fetch(`http://localhost:8000/taskList/${selectedTask!.id}`, {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    ...selectedTask,
+                    status: item
+                })
+            })
+                .then(res => res.json())
+                .then(data => console.log(data))
+                .catch(err => console.log(err))
         }
     }
 
