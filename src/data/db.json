@@ -76,17 +76,19 @@
       "description": "qdqw",
       "status": "toDo",
       "createdAt": "2023-08-02T19:01:31.860Z",
-      "soft_delete": null,
-      "story_point": 1
+      "soft_delete": "b14e136a-8f26-bcdc-390e-cba5d4b62ac3",
+      "story_point": 1,
+      "soft_item": "b14e136a-8f26-bcdc-390e-cba5d4b62ac3"
     },
     {
       "id": "1691002896424",
       "title": "beh",
       "description": "zde",
-      "status": "toDo",
+      "status": "inProgress",
       "createdAt": "2023-08-02T19:01:36.424Z",
-      "soft_delete": null,
-      "story_point": 2
+      "soft_delete": "7bf9eb92-a5e9-26a0-1c1a-3806fc942f06",
+      "story_point": 2,
+      "soft_item": "7bf9eb92-a5e9-26a0-1c1a-3806fc942f06"
     },
     {
       "id": "1691002901184",
@@ -97,6 +99,16 @@
       "soft_delete": "8107c056-965d-5213-fdb9-c39c6fdd53e8",
       "story_point": 1,
       "soft_item": "8107c056-965d-5213-fdb9-c39c6fdd53e8"
+    },
+    {
+      "id": "1691003940729",
+      "title": "xc",
+      "description": "",
+      "status": "toDo",
+      "createdAt": "2023-08-02T19:19:00.729Z",
+      "soft_delete": "a1b9422c-0930-b3c8-11c9-deddb902909b",
+      "story_point": 1,
+      "soft_item": "a1b9422c-0930-b3c8-11c9-deddb902909b"
     }
   ]
 }

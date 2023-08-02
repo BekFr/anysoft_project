@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .btn-pointer {
+    @apply w-10 h-10 border-2 text-center text-white mr-2
+    }
+    
+    .btn-add {
+        @apply px-4 py-2 bg-blue-500 text-white rounded-r w-max h-max self-end
+    }
+}

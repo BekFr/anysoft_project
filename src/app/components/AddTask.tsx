@@ -83,7 +83,7 @@ const AddTask = observer(() => {
                             onClick={() => {
                                 task.story_point = point
                             }}
-                            className='w-10 h-10 border-2 text-center text-white'
+                            className='btn-pointer'
                         >
                             { point }
                         </button>
@@ -92,7 +92,7 @@ const AddTask = observer(() => {
             </div>
 
             <button
-                className="px-4 py-2 bg-blue-500 text-white rounded-r w-max h-max self-end"
+                className="btn-add"
                 onClick={handleAddUpdateTask}
             >
                 {todoStore.buttonType} Task
