@@ -4,7 +4,6 @@ import { TaskItem, statusType } from "../ts/type"
 
 const TaskColumns = observer(({ tasks, statusItem }: { tasks: TaskItem[], statusItem: statusType }) => {
 
-
     return (
         tasks.filter(el => el.status === statusItem).map((taskItem, index) => (
 

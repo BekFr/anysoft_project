@@ -1,4 +1,4 @@
-import { test } from 'vitest';
+import { test, expect } from 'vitest';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import AddTask from '../app/components/AddTask';
 import { todoStore} from '../app/todoLogic';

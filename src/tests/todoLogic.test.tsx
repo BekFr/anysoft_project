@@ -1,7 +1,7 @@
 import { TodoLogic } from "../app/todoLogic"
 import { TaskItem } from "../app/ts/type";
 import uuid from 'react-uuid';
-
+import { test, expect } from 'vitest';
 
 test("it should add new task to the taskList", () => {
     const todoTestStore = new TodoLogic();
@@ -34,9 +34,9 @@ test("it should delete task item from the taskList", () => {
     }
 
     todoTestStore.addTask(task)
-    todoTestStore.deleteTask(task.id)
+    todoTestStore.deleteTask(task.id, task)
 
-    expect(todoTestStore.tasks.length).toBe(0)
+    expect(task.soft_delete).not.toEqual(null)
 })
 
 
