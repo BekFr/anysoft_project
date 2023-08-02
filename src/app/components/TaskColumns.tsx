@@ -29,7 +29,7 @@ const TaskColumns = observer(({ tasks, statusItem }: { tasks: TaskItem[], status
                     </button>
                     <button
                         className="px-2 py-1 bg-red-500 text-white rounded"
-                        onClick={() => todoStore.deleteTask(taskItem.id)}
+                        onClick={() => todoStore.deleteTask(taskItem.id, taskItem)}
                     >
                         Delete
                     </button>

@@ -1,6 +1,6 @@
-import { vi } from "vitest";
 import { TodoLogic } from "../app/todoLogic"
 import { TaskItem } from "../app/ts/type";
+import uuid from 'react-uuid';
 
 
 test("it should add new task to the taskList", () => {
@@ -10,7 +10,7 @@ test("it should add new task to the taskList", () => {
         title: 'title',
         description: 'description',
         status: 'toDo',
-        createdAt: new Date().toLocaleDateString(),
+        createdAt: uuid(),
         soft_delete: null,
         story_point: 1
     }
@@ -28,8 +28,9 @@ test("it should delete task item from the taskList", () => {
         title: 'title',
         description: 'description',
         status: 'toDo',
-        createdAt: new Date().toLocaleDateString(),
-        soft_delete: null
+        createdAt: uuid(),
+        soft_delete: null,
+        story_point: 1
     }
 
     todoTestStore.addTask(task)
@@ -46,8 +47,9 @@ test("it should update task", () => {
         title: 'title',
         description: 'description',
         status: 'toDo',
-        createdAt: new Date().toLocaleDateString(),
-        soft_delete: null
+        createdAt: uuid(),
+        soft_delete: null,
+        story_point: 1
     }
 
     todoTestStore.addTask(task)
@@ -67,8 +69,9 @@ test('it should handle dragging a task and update its status', () => {
         title: 'Test Task Title',
         description: 'Test Task Description',
         status: 'toDo',
-        createdAt: new Date().toLocaleDateString(),
+        createdAt: uuid(),
         soft_delete: null,
+        story_point: 1
     };
     todoTestStore.tasks.push(task);
 

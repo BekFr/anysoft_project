@@ -36,6 +36,7 @@ test('it should update an existing task with new title and description', async (
         status: 'toDo',
         createdAt: new Date().toISOString(),
         soft_delete: null,
+        story_point: 1,
     };
     todoStore.addTask(initialTask);
 

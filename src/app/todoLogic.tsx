@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import { TaskItem, btnType, statusType } from './ts/type';
+import uuid from 'react-uuid';
 
 
 class TodoLogic {
@@ -13,7 +14,7 @@ class TodoLogic {
         title: '',
         description: '',
         status: 'toDo',
-        createdAt: new Date().toLocaleDateString(),
+        createdAt: uuid(),
         soft_delete: null,
         story_point: 1
     }
@@ -39,15 +40,27 @@ class TodoLogic {
     }
 
 
-    deleteTask(taskId: string) {
-        this.tasks = this.tasks.filter((task) => task.id !== taskId);
+    deleteTask(taskId: string, taskItem: TaskItem) {
+        taskItem.soft_delete = uuid();
+        this.tasks = this.tasks.filter((task) => task.soft_delete === null);
 
-        fetch(`http://localhost:8000/taskList/${taskId}`, {
-            method: "DELETE"
+        fetch(`http://localhost:8000/taskList/${taskItem!.id}`, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                ...taskItem,
+                soft_item: taskItem.soft_delete
+            })
         })
             .then(res => res.json())
             .then(data => console.log(data))
             .catch(err => console.log(err))
+
+        this.task.title = "";
+        this.task.description = "";
+        this.task.story_point = 1
     }
 
     handleUpdateTask = (taskId: string, title: string, description: string) => {
@@ -82,6 +95,7 @@ class TodoLogic {
     handlePointerDown = (taskId: string) => {
         this.downTaskId = taskId
     }
+
     handlePointerUp = () => {
         this.downTaskId = null
     }

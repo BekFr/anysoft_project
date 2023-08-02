@@ -2,7 +2,7 @@
 import AddTask from './components/AddTask';
 import { todoStore } from './todoLogic';
 import { observer } from 'mobx-react-lite';
-import { statusType } from './ts/type';
+import { TaskItem, statusType } from './ts/type';
 import { useEffect, useState } from 'react';
 import TaskColumns from './components/TaskColumns';
 
@@ -15,7 +15,7 @@ const Home = observer(() => {
   useEffect(() => {
     fetch("http://localhost:8000/taskList")
       .then(res => res.json())
-      .then(data => todoStore.tasks = data)
+      .then(data => todoStore.tasks = data.filter((item: TaskItem) => item.soft_delete === null))
       .catch(err => console.log(err))
   }, [])
 
