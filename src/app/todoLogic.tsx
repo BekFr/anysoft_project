@@ -14,7 +14,8 @@ class TodoLogic {
         description: '',
         status: 'toDo',
         createdAt: new Date().toLocaleDateString(),
-        soft_delete: null
+        soft_delete: null,
+        story_point: 1
     }
 
     constructor() {
@@ -50,17 +51,17 @@ class TodoLogic {
     }
 
     handleUpdateTask = (taskId: string, title: string, description: string) => {
-        todoStore.buttonType = "Update"
-        todoStore.updateTaskId = taskId
-        todoStore.task.title = title
-        todoStore.task.description = description
+        this.buttonType = "Update"
+        this.updateTaskId = taskId
+        this.task.title = title
+        this.task.description = description
     };
 
     handlePointerEnter = (item: statusType) => {
-        if (todoStore.downTaskId) {
-            const selectedTask = todoStore.tasks.find(task => task.id === todoStore.downTaskId)
+        if (this.downTaskId) {
+            const selectedTask = this.tasks.find(task => task.id === this.downTaskId)
             selectedTask!.status = item
-            todoStore.downTaskId = null
+            this.downTaskId = null
 
             fetch(`http://localhost:8000/taskList/${selectedTask!.id}`, {
                 method: "PUT",
@@ -79,12 +80,13 @@ class TodoLogic {
     }
 
     handlePointerDown = (taskId: string) => {
-        todoStore.downTaskId = taskId
+        this.downTaskId = taskId
     }
     handlePointerUp = () => {
-        todoStore.downTaskId = null
+        this.downTaskId = null
     }
 }
 
 const todoStore = new TodoLogic();
-export default todoStore;
+export { todoStore };
+export { TodoLogic };

@@ -1,68 +1,53 @@
 "use client"
 import AddTask from './components/AddTask';
-import todoStore from './todoLogic';
+import { todoStore } from './todoLogic';
 import { observer } from 'mobx-react-lite';
-import { TaskItem, statusType } from './ts/type';
+import { statusType } from './ts/type';
 import { useEffect, useState } from 'react';
+import TaskColumns from './components/TaskColumns';
 
 
 const Home = observer(() => {
-
-  const handleDeleteTask = (taskId: string) => {
-    todoStore.deleteTask(taskId);
-  };
-
-  
+  const tasks = todoStore.tasks;
+  const [search, setSearch] = useState("");
   const typeOfGroups: statusType[] = ["toDo", "inProgress", "done"]
 
-  useEffect ( () => {
+  useEffect(() => {
     fetch("http://localhost:8000/taskList")
       .then(res => res.json())
       .then(data => todoStore.tasks = data)
+      .catch(err => console.log(err))
   }, [])
+
+  const filteredTasks = todoStore.tasks.filter((task) =>
+    task.title.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <div className="container mx-auto mt-5 px-5">
       <h1 className="text-3xl font-semibold mb-4">Todo App</h1>
       <AddTask />
-      <div>
+      {
+        tasks.length > 0 &&
+        <input
+          type="text"
+          className="px-4 py-2 mb-3 border border-gray-300 rounded-l w-full"
+          placeholder='Search task by title'
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      }
+
+      <div className='flex border-2 justify-between  border-sky-500 p-5 rounded space-x-3'>
         {
-          typeOfGroups.map((item) => (
+          typeOfGroups.map((statusItem) => (
             <div
-              className='min-h-[100px] border mb-10'
-              key={item}
-              onPointerEnter={() => todoStore.handlePointerEnter(item)}
+              className='min-h-[200px] border mb-10 p-2 flex-1'
+              key={statusItem}
+              onPointerEnter={() => todoStore.handlePointerEnter(statusItem)}
             >
-              <h3 className='border'>{item}</h3>
-              {
-                todoStore.tasks.filter(el => el.status === item).map((taskItem, index) => (
-                  <div
-                    draggable
-                    key={taskItem.id}
-                    className="flex items-center bg-gray-100 px-4 py-2 border border-gray-300 rounded mt-2"
-                    onPointerDown={() => todoStore.handlePointerDown(taskItem.id)}
-                    onPointerUp={todoStore.handlePointerUp}
-                  >
-                    <div className="flex-1 space-y-3">
-                      <h1 className='text-2xl'>{taskItem.title}</h1>
-                      <h4>{taskItem.description}</h4>
-                    </div>
-                    <div className="flex-1">{taskItem.createdAt}</div>
-                    <button
-                      className="px-2 py-1 mr-2 bg-blue-500 text-white rounded"
-                      onClick={() => todoStore.handleUpdateTask(taskItem.id, taskItem.title, taskItem.description)}
-                    >
-                      Update
-                    </button>
-                    <button
-                      className="px-2 py-1 bg-red-500 text-white rounded"
-                      onClick={() => handleDeleteTask(taskItem.id)}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                ))
-              }
+              <h3 className='border pl-3 text-center'>{statusItem.toUpperCase()}</h3>
+              <TaskColumns tasks={filteredTasks} statusItem={statusItem} />
             </div>
           ))
         }

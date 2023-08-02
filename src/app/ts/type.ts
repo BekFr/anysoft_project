@@ -7,6 +7,7 @@ export interface TaskItem {
     status: statusType;
     createdAt: string;
     soft_delete: string | null;
+    story_point: number;
 }
 
 export type statusType = "inProgress" | "toDo" | "done";
